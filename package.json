@@ -1,0 +1,72 @@
+{
+  "author": "Anwar Hahj Jefferson-George <anwarhahjjeffersongeorge@gmail.com>",
+  "dependencies": {
+    "esm": "^3.2.25"
+  },
+  "description": "Function-valued properties of objects as dot-separated/array paths.",
+  "devDependencies": {
+    "ava": "^3.6.0",
+    "babel-eslint": "^10.1.0",
+    "codecov": "^3.6.5",
+    "cross-env": "^7.0.2",
+    "ink-docstrap": "^1.3.2",
+    "jsdoc": "^3.6.4",
+    "nyc": "^15.0.1",
+    "snazzy": "^8.0.0",
+    "standard": "^14.3.3"
+  },
+  "keywords": [
+    "funckey"
+  ],
+  "license": "Unlicense",
+  "main": "./src/index.js",
+  "module": "./src/main.js",
+  "name": "funckey",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anwarhahjjeffersongeorge/funckey.git"
+  },
+  "scripts": {
+    "clean": "rm -rf .nyc_output coverage docs",
+    "coverage": "codecov",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=html ava",
+    "wtest": "ava --watch",
+    "preversion": "npm test && npm run doc",
+    "postversion": "git push",
+    "predoc": "rm -rf docs  && mkdir docs",
+    "doc": "jsdoc src/main.js -d ./docs/ -c ./jsdoc.json -r ./README.md --verbose -t ./node_modules/ink-docstrap/template",
+    "pretest": "clear && standard --fix \"index.js\" \"main.js\" | snazzy"
+  },
+  "version": "0.0.0",
+  "ava": {
+    "files": [
+      "test/**/*.test.js"
+    ],
+    "color": true,
+    "cache": true,
+    "concurrency": 5,
+    "failFast": true,
+    "failWithoutAssertions": true,
+    "tap": true,
+    "verbose": true,
+    "require": [
+      "esm"
+    ]
+  },
+  "jsdoc": {},
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "files": [
+    "src/**/*",
+    "UNLICENSE"
+  ],
+  "bugs": {
+    "url": "https://github.com/anwarhahjjeffersongeorge/funckey/issues"
+  },
+  "homepage": "https://github.com/anwarhahjjeffersongeorge/funckey#readme",
+  "directories": {
+    "test": "test"
+  }
+}
