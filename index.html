@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Documentation Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.slate.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Documentation</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><h2><a href="https://github.com/anwarhahjjeffersongeorge/funckey"><img src="https://img.shields.io/github/package-json/v/anwarhahjjeffersongeorge/funckey/master.svg" alt="Version"></a><a href="https://travis-ci.org/anwarhahjjeffersongeorge/funckey"><img src="https://travis-ci.org/anwarhahjjeffersongeorge/funckey.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/gh/anwarhahjjeffersongeorge/funckey"><img src="https://codecov.io/gh/anwarhahjjeffersongeorge/funckey/branch/master/graph/badge.svg" alt="codecov"></a></h2>
+<p><a href="UNLICENSE"><img src="https://img.shields.io/github/license/anwarhahjjeffersongeorge/funckey.svg" alt="license"></a> <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-blue.svg" alt="JavaScript Style Guide"></a></p>
+<hr>
+<h1>— <code>funckey</code> —</h1>
+<h3><a href="https://anwarhahjjeffersongeorge.github.io/funckey/">Documentation</a></h3>
+<h3>Function-valued properties of objects as dot-separated/array paths.</h3>
+<hr>
+<h2>Installation</h2>
+<p>Run <code>npm install funckey</code></p>
+<h2>Usage</h2>
+<p>Module exports a unary function accepting an <strong>object with named parameters</strong> as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>o</code></td>
+<td><code>Object</code></td>
+<td>Yes</td>
+<td>The object to search for functions</td>
+</tr>
+<tr>
+<td><code>prefix</code></td>
+<td><code>String</code></td>
+<td>No</td>
+<td>A prefix to add to found paths</td>
+</tr>
+<tr>
+<td><code>arrayMode</code></td>
+<td><code>Boolean</code></td>
+<td>No</td>
+<td>Whether to return paths as arrays instead of dot-separated strings</td>
+</tr>
+<tr>
+<td><code>excludes</code></td>
+<td><code>Array</code></td>
+<td>No</td>
+<td>Object references to exclude from traversal (i.e., circular references)</td>
+</tr>
+</tbody>
+</table>
+<h4>Find functions in an object as dot-paths:</h4>
+<pre class="prettyprint source"><code>const fixture1 = {
+  n(){},
+  o: {
+    a: ()=>{},
+    b:3,
+    c: {
+      d(){},
+      e: 4
+    }
+  }
+}
+
+funckey({object: fixture0}) // ['n', 'o.a', 'o.c.d']
+</code></pre>
+<h4>Find functions in a nested object as array path lists:</h4>
+<pre class="prettyprint source"><code>const fixture1 = {
+  n(){},
+  o: {
+    a: ()=>{},
+    b:3,
+    c: {
+      d(){},
+      e: 4
+    }
+  }
+}
+
+funckey({object: fixture1,  arrayMode: true})
+// ^ [['n'], ['o', 'a'], ['o', 'c', 'd'] ]
+</code></pre>
+<h2>Testing</h2>
+<p>npm test</p></article>
+    </section>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	ⓤ Uncopyright 2019 by Anwar Hahj Jefferson-George
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a>
+	
+		on  2020 0408 2138+0000
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

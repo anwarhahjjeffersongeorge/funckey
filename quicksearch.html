@@ -1,0 +1,31 @@
+<html>
+<head>
+</head>
+<body style="background: transparent;">
+    <script src="scripts/docstrap.lib.js"></script>
+    <script src="scripts/lunr.min.js"></script>
+    <script src="scripts/fulltext-search.js"></script>
+
+    <script type="text/x-docstrap-searchdb">
+    {"index.html":{"id":"index.html","title":"Index","body":" Documentation — funckey — Documentation Function-valued properties of objects as dot-separated/array paths. Installation Run npm install funckey Usage Module exports a unary function accepting an object with named parameters as follows: Argument Type Required Description o Object Yes The object to search for functions prefix String No A prefix to add to found paths arrayMode Boolean No Whether to return paths as arrays instead of dot-separated strings excludes Array No Object references to exclude from traversal (i.e., circular references) Find functions in an object as dot-paths: const fixture1 = { n(){}, o: { a: ()=&gt;{}, b:3, c: { d(){}, e: 4 } } } funckey({object: fixture0}) // ['n', 'o.a', 'o.c.d'] Find functions in a nested object as array path lists: const fixture1 = { n(){}, o: { a: ()=&gt;{}, b:3, c: { d(){}, e: 4 } } } funckey({object: fixture1, arrayMode: true}) // ^ [['n'], ['o', 'a'], ['o', 'c', 'd'] ] Testing npm test × Search results Close "}}
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Searcher.init();
+        });
+
+        $(window).on("message", function(msg) {
+            var msgData = msg.originalEvent.data;
+
+            if (msgData.msgid != "docstrap.quicksearch.start") {
+                return;
+            }
+
+            var results = Searcher.search(msgData.searchTerms);
+
+            window.parent.postMessage({"results": results, "msgid": "docstrap.quicksearch.done"}, "*");
+        });
+    </script>
+</body>
+</html>
