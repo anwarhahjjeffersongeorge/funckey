@@ -19,12 +19,12 @@ Run `npm install funckey`
 
 Module exports a unary function accepting an __object with named parameters__ as follows:  
 
-Argument     | Type           | Required | Description  
------------- | ---------------| -------- | -----------  
-`o`     | `Object`       | Yes      |  The object to search for functions  
-`prefix`     | `String`       | No       |  A prefix to add to found paths
-`arrayMode`  | `Boolean`      | No       | Whether to return paths as arrays instead of dot-separated strings
-`excludes`   | `Array`        | No       | Object references to exclude from traversal (i.e., circular references)
+Argument     | Type           | Required  | Description  
+------------ | ---------------| --------- | -----------  
+`obj`        | `Object`       | Yes       |  The object to search for functions  
+`prefix`     | `String`       | No        |  A prefix to add to found paths
+`arrayMode`  | `Boolean`      | No        | Whether to return paths as arrays instead of dot-separated strings
+`excludes`   | `Array`        | No        | Object references to exclude from traversal (i.e., circular references)
 
 #### Find functions in an object as dot-paths:
 ```
@@ -40,7 +40,7 @@ const fixture1 = {
   }
 }
 
-funckey({object: fixture0}) // ['n', 'o.a', 'o.c.d']
+funckey({obj: fixture0}) // ['n', 'o.a', 'o.c.d']
 ```
 
 #### Find functions in a nested object as array path lists:
@@ -57,7 +57,7 @@ const fixture1 = {
   }
 }
 
-funckey({object: fixture1,  arrayMode: true})
+funckey({obj: fixture1,  arrayMode: true})
 // ^ [['n'], ['o', 'a'], ['o', 'c', 'd'] ]
 ```
 ## Testing
