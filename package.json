@@ -22,7 +22,6 @@
   "main": "./src/index.js",
   "module": "./src/main.js",
   "name": "funckey",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anwarhahjjeffersongeorge/funckey.git"
