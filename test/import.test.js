@@ -104,3 +104,46 @@ test('Handles circular references', t => {
     'Finds nested array paths'
   )
 })
+
+test('Ignores null, undefined elements', t => {
+  const fixture0 = {
+    n(){},
+    m: null,
+    o: {
+      a: ()=>{},
+      b:3,
+      c: {
+        d(){},
+        e: 4
+      },
+      d: undefined
+    }
+  }
+  fixture0.d = fixture0
+  const targetDotPaths = ['n', 'o.a', 'o.c.d']
+  let dotResult, arrayResult
+  const dotTest = () => {
+    dotResult = funckey({
+      obj: fixture0
+    })
+  }
+  const arrayTest = () => {
+    arrayResult = funckey({
+      obj: fixture0,
+      arrayMode: true
+    })
+  }
+  t.notThrows(dotTest, `Ignores circular reference when finding dot path`)
+  t.deepEqual(
+    dotResult,
+    targetDotPaths,
+    'Finds nested dot-paths'
+  )
+  t.notThrows(arrayTest, `Ignores circular reference when finding array path`)
+  const targetArrayPaths = [['n'], ['o', 'a'], ['o', 'c', 'd'] ]
+  t.deepEqual(
+    arrayResult,
+    targetArrayPaths,
+    'Finds nested array paths'
+  )
+})

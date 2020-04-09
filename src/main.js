@@ -8,7 +8,7 @@ export default function funcKey({
   excludes = excludes.includes(obj) ? excludes : [...excludes, obj]
   const r = Object.entries(obj)
     .reduce((acc, [i, e]) => {
-      if(typeof e === 'object' && !excludes.includes(e)) {
+      if(e && typeof e === 'object' && !excludes.includes(e)) {
         acc = [
           ...acc,
           ...funcKey({
