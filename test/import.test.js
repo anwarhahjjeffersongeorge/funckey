@@ -83,6 +83,11 @@ test('Identfies native Object functions using option \'pathNames\'', nativeClass
 test('Identfies native Array functions using option \'pathNames\'', nativeClasses, Array)
 test('Identfies native Math functions using option \'pathNames\'', nativeClasses, Math)
 
+
+test('Exports a function', t => {
+  t.is(typeof funckey, 'function', 'is something')
+  // t.is(typeof funckey, 'something', 'is a something type')
+})
   const targetDotPaths = ['a', 'b', 'c']
   t.deepEqual(
     funckey({
