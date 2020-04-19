@@ -276,3 +276,63 @@ test('Ignores null, undefined elements', t => {
     'Finds nested array paths'
   )
 })
+
+test('Works with top-level mixed string and symbol types using option \'all\'', t => {
+  const fixture0 = {
+    a: 3,
+    b(){},
+    [Symbol.for('c')]: ()=>{},
+    d: {}
+  }
+  // The order of these elements MATTERS for testing
+  const expectedArrayPaths0 = [
+    'b',
+    Symbol.for('c'),
+  ]
+  const r = funckey({
+    obj: fixture0,
+    all: true
+  })
+  // t.log(expectedArrayPaths0, r)
+  t.deepEqual(
+    r,
+    expectedArrayPaths0,
+    'Works with all option'
+  )
+})
+
+
+test('Works with nested mixed string and symbol types using option \'all\'', t => {
+  const fixture0 = {
+    a: 3,
+    b(){},
+    [Symbol.for('c')]: {
+      ca: ()=>{},
+      [Symbol.for('cb')]: ()=>{},
+      cc: 'no'
+    },
+    d: {
+      da () {},
+      [Symbol.for('db')]:()=>{},
+      dc: 33
+    }
+  }
+  // The order of these elements MATTERS for testing
+  const expectedArrayPaths0 = [
+    ['b'],
+    ['d', 'da'],
+    ['d', Symbol.for('db')],
+    [Symbol.for('c'), 'ca'],
+    [Symbol.for('c'), Symbol.for('cb')],
+  ]
+  const r = funckey({
+    obj: fixture0,
+    all: true
+  })
+  // t.log(expectedArrayPaths0, r)
+  t.deepEqual(
+    r,
+    expectedArrayPaths0,
+    'Works with all option'
+  )
+})
