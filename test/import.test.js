@@ -70,6 +70,19 @@ test('Ignores keys in \'excludeKeys\' option array', t=> {
   // t.log(r1)
   t.deepEqual(r1, expected1, 'ignores specified keys at all nesting levels')
 })
+
+
+function nativeClasses(t, obj) {
+  t.true(
+    funckey({obj, propNames: true}).length > 0,
+    'Gets functions'
+  )
+}
+
+test('Identfies native Object functions using option \'pathNames\'', nativeClasses, Object)
+test('Identfies native Array functions using option \'pathNames\'', nativeClasses, Array)
+test('Identfies native Math functions using option \'pathNames\'', nativeClasses, Math)
+
   const targetDotPaths = ['a', 'b', 'c']
   t.deepEqual(
     funckey({
