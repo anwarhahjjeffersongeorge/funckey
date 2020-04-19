@@ -88,55 +88,110 @@ test('Exports a function', t => {
   t.is(typeof funckey, 'function', 'is something')
   // t.is(typeof funckey, 'something', 'is a something type')
 })
+
+function topLevelT(t, fixture0, symbols = false) {
   const targetDotPaths = ['a', 'b', 'c']
-  t.deepEqual(
-    funckey({
-      obj: fixture0
-    }),
-    targetDotPaths,
-    'Finds top-level dot-paths'
-  )
-  const targetArrayPaths = [['a'], ['b'], ['c'] ]
+  const targetSymbolDotPaths = targetDotPaths.map((v) => Symbol.for(`${v}`))
   t.deepEqual(
     funckey({
       obj: fixture0,
-      arrayMode: true
+      symbNames: symbols,
     }),
-    targetArrayPaths,
+    symbols ? targetSymbolDotPaths : targetDotPaths,
+    'Finds top-level dot-paths'
+  )
+  const targetArrayPaths = [['a'], ['b'], ['c'] ]
+  const targetSymbolArrayPaths = targetArrayPaths.map(([v]) => [Symbol.for(`${v}`)])
+  const r = funckey({
+    obj: fixture0,
+    arrayMode: true,
+    symbNames: symbols
+  })
+  t.deepEqual(
+    r,
+    symbols ? targetSymbolArrayPaths : targetArrayPaths,
     'Finds top-level array paths'
   )
+}
+
+test('Gets top-level function-valued keys', topLevelT, {
+  a(){},
+  b(){},
+  c: class cc{},
+  d: 33
 })
 
-test('Gets nested function-valued keys', t => {
-  const fixture1 = {
-    n(){},
-    o: {
-      a: ()=>{},
-      b:3,
-      c: {
-        d(){},
-        e: 4
-      }
+test('Gets top-level function-valued keys with symbols using option  \'symbNames\'', topLevelT, Object.fromEntries(
+  Object.entries(
+    {
+      a(){},
+      b(){},
+      c: class cc{},
+      d: 33,
+    }
+  )
+    .map(([a,f]) => [Symbol.for(a), f]))
+, true)
+
+function nestedLevelT(t, fixture1, symbols = false){
+  const targetDotPaths = ['n', 'o.a', 'o.c.d']
+  const targetArrayPaths = [['n'], ['o', 'a'], ['o', 'c', 'd'] ]
+  const targetSymbolArrayPaths = targetArrayPaths.map(v => v.map(vv => Symbol.for(`${vv}`)))
+  const targetSymbolDotPaths = targetSymbolArrayPaths
+
+  const r0 = funckey({
+    obj: fixture1,
+    symbNames: symbols
+  })
+  // if (symbols === true) {
+  //   t.log('0', targetSymbolDotPaths, /*fixture1,*/ r0)
+  // }
+  t.deepEqual(
+    r0,
+    symbols ? targetSymbolDotPaths : targetDotPaths,
+    symbols ? 'Defaults to array paths for symbols' : 'Finds nested dot-paths for strings'
+  )
+
+  const r1 = funckey({
+    obj: fixture1,
+    arrayMode: true,
+    symbNames: symbols
+  })
+  // if (symbols === true) {
+  //   t.log('1', targetSymbolArrayPaths, /*fixture1,*/ r1)
+  // }
+  t.deepEqual(
+    r1,
+    symbols ? targetSymbolArrayPaths : targetArrayPaths,
+    symbols ? 'Finds nested array paths' : 'Finds nested dot paths'
+  )
+}
+
+test('Gets nested function-valued string keys', nestedLevelT, {
+  n(){},
+  o: {
+    a: ()=>{},
+    b:3,
+    c: {
+      d(){},
+      e: 4
     }
   }
-  const targetDotPaths = ['n', 'o.a', 'o.c.d']
-  t.deepEqual(
-    funckey({
-      obj: fixture1
-    }),
-    targetDotPaths,
-    'Finds nested dot-paths'
-  )
-  const targetArrayPaths = [['n'], ['o', 'a'], ['o', 'c', 'd'] ]
-  t.deepEqual(
-    funckey({
-      obj: fixture1,
-      arrayMode: true
-    }),
-    targetArrayPaths,
-    'Finds nested array paths'
-  )
 })
+
+
+test('Gets nested function-valued symbol keys using option \'symbNames\'', nestedLevelT, {
+  [Symbol.for('n')](){},
+  [Symbol.for('o')]:{
+    [Symbol.for('a')]: ()=>{},
+    [Symbol.for('b')]:3,
+    [Symbol.for('c')]: {
+      [Symbol.for('d')](){},
+      [Symbol.for('e')]: 4
+    }
+  }
+}, true)
+
 
 test('Handles circular references', t => {
   const fixture0 = {
