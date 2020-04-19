@@ -2,9 +2,42 @@
 import test from 'ava'
 import funckey from '..'
 
-test('Exports a function', t => {
-  t.is(typeof funckey, 'function', 'is something')
-  // t.is(typeof funckey, 'something', 'is a something type')
+test('Returns top-level paths corresponding to functions/classes', t => {
+  const fixture0 = {
+    a (){},
+    b: 22,
+    c: ()=>{},
+    [Symbol.for('d')](){},
+    e: {},
+    f: class f{},
+  }
+
+  const r = funckey({
+    obj: fixture0,
+    all: true
+  })
+
+  t.true(r.every(k => typeof fixture0[k] === 'function'))
+})
+
+test('Returns nested paths corresponding to functions', t => {
+  const fixture0 = {
+    a: {
+      aa(){},
+      ab: 33
+    },
+    b: {
+      ba: () => {},
+      bb: 23233232023
+    },
+  }
+
+  const r = funckey({
+    obj: fixture0,
+    arrayMode: true
+  })
+
+  t.true(r.every(([k, kk]) => typeof fixture0[k][kk] === 'function'))
 })
 
 test('Gets top-level function-valued keys', t => {
