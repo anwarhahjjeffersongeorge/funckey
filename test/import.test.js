@@ -40,13 +40,36 @@ test('Returns nested paths corresponding to functions', t => {
   t.true(r.every(([k, kk]) => typeof fixture0[k][kk] === 'function'))
 })
 
-test('Gets top-level function-valued keys', t => {
+test('Ignores keys in \'excludeKeys\' option array', t=> {
   const fixture0 = {
     a(){},
     b(){},
-    c: class cc{},
-    d: 33
+    c:20,
+    d: {
+      prototype: 30303
+    },
+    prototype: {
+      a(){},
+      p(){},
+      q:33,
+      r:()=>{}
+    }
   }
+  const expected0 = [ 'a', 'b' ]
+  const r0 = funckey({
+    obj: fixture0
+  })
+  t.deepEqual(r0, expected0, 'ignores \'prototype\' key by default')
+
+
+  const excludeKeys = ['a', 'r']
+  const expected1 = [ 'b', 'prototype.p' ]
+  const r1 = funckey({
+    obj: fixture0, excludeKeys
+  })
+  // t.log(r1)
+  t.deepEqual(r1, expected1, 'ignores specified keys at all nesting levels')
+})
   const targetDotPaths = ['a', 'b', 'c']
   t.deepEqual(
     funckey({
